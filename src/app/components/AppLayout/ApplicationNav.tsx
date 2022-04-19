@@ -10,24 +10,11 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import routes from 'app/routes';
-import { useHistory } from 'react-router-dom';
-
+import { useAppLayout } from './useAppLayout';
 
 const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const history = useHistory();
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-  
-  const handleNavigate = (path: string) => {
-    history.push(path);
-    handleCloseNavMenu();
-  }
+  const { anchorElNav, handleOpenNavMenu, handleCloseNavMenu, handleNavigate } =
+    useAppLayout();
 
   return (
     <AppBar position="static">
@@ -71,9 +58,9 @@ const ResponsiveAppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {routes.map((route) => (
+              {routes.map(route => (
                 <MenuItem key={route.name} onClick={handleCloseNavMenu}>
-                  <Typography 
+                  <Typography
                     textAlign="center"
                     onClick={e => handleNavigate(route.path)}
                   >
@@ -92,10 +79,10 @@ const ResponsiveAppBar = () => {
             Zesty.io
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {routes.map((route) => (
+            {routes.map(route => (
               <Button
                 key={route.name}
-                onClick={e => handleNavigate(route.path) }
+                onClick={e => handleNavigate(route.path)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {route.name}
